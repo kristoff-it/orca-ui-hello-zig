@@ -1,0 +1,11 @@
+.{
+    .name = "orca-ui-hello-zig",
+    .version = "0.0.0",
+
+    .dependencies = .{
+        .orca = .{
+            // depends on merging https://github.com/ziglang/zig/pull/17277
+            .url = "git+https://git.handmade.network/hmn/orca.git#c4a1ad52a07bae2e6710c38f41a3c64ed8f93136",
+        },
+    },
+}
