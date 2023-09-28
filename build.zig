@@ -22,11 +22,7 @@ pub fn build(b: *std.build.Builder) void {
     app.addIncludePath(orca_dep.path("src/ext"));
 
     const cflags: []const []const u8 = &.{
-        "--no-standard-libraries",
-        "-fno-builtin",
         "-O2", // works around undefined symbol on __fpclassifyl
-        "-mbulk-memory",
-        "-fno-sanitize=undefined",
     };
     app.addCSourceFile(.{
         .file = orca_dep.path("src/orca.c"),
