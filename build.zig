@@ -9,14 +9,14 @@ pub fn build(b: *std.build.Builder) void {
         .target = .{
             .cpu_arch = .wasm32,
             .os_tag = .freestanding,
-            .cpu_features_add = &.{"bulk_memory"},
+            .cpu_features_add = std.Target.wasm.featureSet(&.{.bulk_memory}),
         },
         .optimize = optimize,
         .root_source_file = .{ .path = "src/main.zig" },
     });
     app.rdynamic = true;
     app.disable_sanitize_c = true;
-    app.defineCMacro("__ORCA__", void);
+    app.defineCMacro("__ORCA__", null);
     app.addSystemIncludePath(orca_dep.path("src/libc-shim/include"));
     app.addIncludePath(orca_dep.path("src"));
     app.addIncludePath(orca_dep.path("src/ext"));
@@ -42,9 +42,8 @@ pub fn build(b: *std.build.Builder) void {
     });
     // TODO: add the build.zig logic for building the orca tool itself
     // if orca upstream used build.zig then we could just grab the exe from there
-    const run_orca = b.addRunArtifact(orca_exe, &.{
-        "bundle", "--orca-dir",
-    });
+    const run_orca = b.addRunArtifact(orca_exe);
+    run_orca.addArgs(&.{ "bundle", "--orca-dir" });
     run_orca.addFileArg(orca_dep.path("."));
     run_orca.addArgs(&.{ "--name", "UI", "--resource-dir", "data" });
     run_orca.addFileArg(app.getEmittedBin());
