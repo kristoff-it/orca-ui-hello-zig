@@ -1,0 +1,11 @@
+.{
+    .name = "orca-ui-hello-zig",
+    .version = "0.0.0",
+
+    .dependencies = .{
+        .orca = .{
+            .url = "git+https://git.handmade.network/hmn/orca.git#6e4943c2fa7bebcd6682a7b589d680d08634db77",
+            .hash = "122055608ef2919e346ca49d43daf962a552ab49ee8a66ab4e07bed6b77946a26600",
+        },
+    },
+}
