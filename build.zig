@@ -1,6 +1,6 @@
 const std = @import("std");
 
-pub fn build(b: *std.build.Builder) void {
+pub fn build_old(b: *std.build.Builder) void {
     const optimize = b.standardOptimizeOption(.{});
     const orca_dep = b.dependency("orca", .{});
 
@@ -127,3 +127,17 @@ const libc_shim_files: []const []const u8 = &.{
     "src/libc-shim/src/tan.c",
     "src/libc-shim/src/tanf.c",
 };
+
+const orca_build = @import("orca");
+
+pub fn build(b: *std.build.Builder) void {
+    const optimize = b.standardOptimizeOption(.{});
+    const orca_dep = b.dependency("orca", .{});
+
+    const app = orca_build.addApp(b, orca_dep, .{
+        .optimize = optimize,
+        .root_source_file = .{ .path = "src/main.zig" },
+    });
+
+    b.installArtifact(app);
+}
